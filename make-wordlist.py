@@ -1,5 +1,5 @@
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import letter
+from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.units import inch
 from reportlab.lib.enums import *
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
@@ -13,8 +13,8 @@ styleSheet = getSampleStyleSheet()
 labelStyle = ParagraphStyle('llab', fontFace='courier', alignment=TA_RIGHT)
 labelStyleCenter = ParagraphStyle('tlab', fontFace='courier', alignment=TA_CENTER)
 
-word_style = ParagraphStyle('cell', alignment=TA_CENTER, fontSize=14, spaceAfter=6)
-hex_style = ParagraphStyle('tlab', fontName='Courier-Bold', alignment=TA_RIGHT, fontSize=8)
+hex_style = ParagraphStyle('tlab', fontName='Courier-Bold', alignment=TA_LEFT, fontSize=6, spaceAfter=2, spaceBefore=0, leading=4)
+word_style = ParagraphStyle('cell', alignment=TA_CENTER, fontSize=8, spaceBefore=0, spaceAfter=0, leading=8)
 
 def cell(w):
     assert 0 <= w < 0x800
@@ -23,8 +23,8 @@ def cell(w):
 
     #rv = Paragraph(f'{word}\n<br/><font face="courier">{hex}</font>', cellStyle)
     rv = []
-    rv.append(Paragraph(word, word_style))
     rv.append(Paragraph(hex, hex_style))
+    rv.append(Paragraph(word, word_style))
 
     return rv
 
@@ -33,16 +33,16 @@ def left_label(x):
 def top_label(x):
     return Paragraph(x, labelStyleCenter)
 
-if 1:
-    doc = SimpleDocTemplate("output.pdf", pagesize=letter)
+def doit(fname='wordlist.pdf'):
+    doc = SimpleDocTemplate(fname, pagesize=landscape(letter))
 
     doc.leftMargin = doc.rightMargin =  \
-    doc.topMargin = doc.bottomMargin = 0.10 * inch
+    doc.topMargin = doc.bottomMargin = 0.1 * inch
 
     # container for the 'Flowable' objects
     elements = []
 
-    rowlen = 8 
+    rowlen = 16
     #data = [[''] + [ top_label('+%d' % i) for i in range(rowlen)]]
         #[left_label('0x%03x'%j)] + 
     data = [ 
@@ -56,6 +56,10 @@ if 1:
         #('VALIGN', (0,0),(0,-1), 'MIDDLE'),
         #('ALIGN', (0,0),(0,-1), 'RIGHT'),
         #('ALIGN', (0,0),(-1,0), 'CENTER'),
+        ('LEFTPADDING', (0,0),(-1,-1), 2),
+        ('RIGHTPADDING', (0,0),(-1,-1), 2),
+        ('TOPPADDING', (0,0),(-1,-1), 0),
+        ('BOTTOMPADDING', (0,0),(-1,-1), 4.25),
         ('GRID', (0,0),(-1,-1), 0.5, colors.grey),
         ]),
     )
@@ -64,5 +68,4 @@ if 1:
     # write the document to disk
     doc.build(elements)
 
-
-
+doit()
