@@ -1,3 +1,42 @@
+## XOR Lookup Table
+
+
+| XOR | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | A | B | C | D | E | F 
+|----:|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---
+|**0**| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | A | B | C | D | E | F 
+|**1**| 1 | 0 | 3 | 2 | 5 | 4 | 7 | 6 | 9 | 8 | B | A | D | C | F | E 
+|**2**| 2 | 3 | 0 | 1 | 6 | 7 | 4 | 5 | A | B | 8 | 9 | E | F | C | D 
+|**3**| 3 | 2 | 1 | 0 | 7 | 6 | 5 | 4 | B | A | 9 | 8 | F | E | D | C 
+|**4**| 4 | 5 | 6 | 7 | 0 | 1 | 2 | 3 | C | D | E | F | 8 | 9 | A | B 
+|**5**| 5 | 4 | 7 | 6 | 1 | 0 | 3 | 2 | D | C | F | E | 9 | 8 | B | A 
+|**6**| 6 | 7 | 4 | 5 | 2 | 3 | 0 | 1 | E | F | C | D | A | B | 8 | 9 
+|**7**| 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 | F | E | D | C | B | A | 9 | 8 
+|**8**| 8 | 9 | A | B | C | D | E | F | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 
+|**9**| 9 | 8 | B | A | D | C | F | E | 1 | 0 | 3 | 2 | 5 | 4 | 7 | 6 
+|**A**| A | B | 8 | 9 | E | F | C | D | 2 | 3 | 0 | 1 | 6 | 7 | 4 | 5 
+|**B**| B | A | 9 | 8 | F | E | D | C | 3 | 2 | 1 | 0 | 7 | 6 | 5 | 4 
+|**C**| C | D | E | F | 8 | 9 | A | B | 4 | 5 | 6 | 7 | 0 | 1 | 2 | 3 
+|**D**| D | C | F | E | 9 | 8 | B | A | 5 | 4 | 7 | 6 | 1 | 0 | 3 | 2 
+|**E**| E | F | C | D | A | B | 8 | 9 | 6 | 7 | 4 | 5 | 2 | 3 | 0 | 1 
+|**F**| F | E | D | C | B | A | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 
+
+
+- XOR = EOR = &oplus; = Exclusive OR [Wikipedia](https://en.wikipedia.org/wiki/Exclusive_or)
+- values in table are: x &oplus; y in hex
+- go sideways for first digit, then look down for second digit
+- in fact, doesn't matter if you do row or column first
+- example: 2 XOR 6 => 4  same as   6 XOR 2 => 4
+- any values XOR itself is zero (diagonal on this table)
+- alternative view: (x) XOR (y) = flip bits of (x) that are set in (y)
+    - XOR with zero does nothing (flips no bits)
+    - XOR with 0xF flips all four bits
+    - XOR with self flips all set bits, so gives zero
+- to XOR three values together, do (a&oplus;b)=X then (X&oplus;c)=answer
+    - right to A, down to B ... take that number, and go to that column
+    - down to C, that is answer: a &oplus; b &oplus; c
+
+---
+
 # XOR Seed Example Using 3 Parts
 
 ## Seed A  (1 of 3)
@@ -54,45 +93,4 @@
   once you have entered the other 23 words.
 - The checksum of each of the XOR-parts protects the final result, assuming your XOR
   math is correct.
-
-
----
-
-
-## XOR Lookup Table
-
-
-| XOR | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | A | B | C | D | E | F 
-|----:|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---
-|**0**| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | A | B | C | D | E | F 
-|**1**| 1 | 0 | 3 | 2 | 5 | 4 | 7 | 6 | 9 | 8 | B | A | D | C | F | E 
-|**2**| 2 | 3 | 0 | 1 | 6 | 7 | 4 | 5 | A | B | 8 | 9 | E | F | C | D 
-|**3**| 3 | 2 | 1 | 0 | 7 | 6 | 5 | 4 | B | A | 9 | 8 | F | E | D | C 
-|**4**| 4 | 5 | 6 | 7 | 0 | 1 | 2 | 3 | C | D | E | F | 8 | 9 | A | B 
-|**5**| 5 | 4 | 7 | 6 | 1 | 0 | 3 | 2 | D | C | F | E | 9 | 8 | B | A 
-|**6**| 6 | 7 | 4 | 5 | 2 | 3 | 0 | 1 | E | F | C | D | A | B | 8 | 9 
-|**7**| 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 | F | E | D | C | B | A | 9 | 8 
-|**8**| 8 | 9 | A | B | C | D | E | F | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 
-|**9**| 9 | 8 | B | A | D | C | F | E | 1 | 0 | 3 | 2 | 5 | 4 | 7 | 6 
-|**A**| A | B | 8 | 9 | E | F | C | D | 2 | 3 | 0 | 1 | 6 | 7 | 4 | 5 
-|**B**| B | A | 9 | 8 | F | E | D | C | 3 | 2 | 1 | 0 | 7 | 6 | 5 | 4 
-|**C**| C | D | E | F | 8 | 9 | A | B | 4 | 5 | 6 | 7 | 0 | 1 | 2 | 3 
-|**D**| D | C | F | E | 9 | 8 | B | A | 5 | 4 | 7 | 6 | 1 | 0 | 3 | 2 
-|**E**| E | F | C | D | A | B | 8 | 9 | 6 | 7 | 4 | 5 | 2 | 3 | 0 | 1 
-|**F**| F | E | D | C | B | A | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 
-
-
-- XOR = EOR = &oplus; = Exclusive OR [Wikipedia](https://en.wikipedia.org/wiki/Exclusive_or)
-- values in table are: x &oplus; y in hex
-- go sideways for first digit, then look down for second digit
-- in fact, doesn't matter if you do row or column first
-- example: 2 XOR 6 => 4  same as   6 XOR 2 => 4
-- any values XOR itself is zero (diagonal on this table)
-- alternative view: (x) XOR (y) = flip bits of (x) that are set in (y)
-    - XOR with zero does nothing (flips no bits)
-    - XOR with 0xF flips all four bits
-    - XOR with self flips all set bits, so gives zero
-- to XOR three values together, do (a&oplus;b)=X then (X&oplus;c)=answer
-    - right to A, down to B ... take that number, and go to that column
-    - down to C, that is answer: a &oplus; b &oplus; c
 

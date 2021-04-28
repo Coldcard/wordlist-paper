@@ -154,10 +154,11 @@ def worked_example(count=3):
 
 
 if 1:
-    worked_example()
-
-if 1:
-    print('\n---\n\n')
     print('## XOR Lookup Table\n\n')
     xor_table('')
+    print('---\n')
+
+if 1:
+    worked_example()
+
 
