@@ -4,6 +4,7 @@ from reportlab.lib.units import inch
 from reportlab.lib.enums import *
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+import sys
 
 from mnemonic import Mnemonic
 wordlist = Mnemonic('english').wordlist
@@ -13,17 +14,20 @@ styleSheet = getSampleStyleSheet()
 labelStyle = ParagraphStyle('llab', fontFace='courier', alignment=TA_RIGHT)
 labelStyleCenter = ParagraphStyle('tlab', fontFace='courier', alignment=TA_CENTER)
 
-hex_style = ParagraphStyle('tlab', fontName='Courier-Bold', alignment=TA_LEFT, fontSize=6, spaceAfter=2, spaceBefore=0, leading=4)
+numbering_style = ParagraphStyle('tlab', fontName='Courier-Bold', alignment=TA_LEFT, fontSize=6, spaceAfter=2, spaceBefore=0, leading=4)
 word_style = ParagraphStyle('cell', alignment=TA_CENTER, fontSize=8, spaceBefore=0, spaceAfter=0, leading=8)
 
-def cell(w):
+
+def cell(w, numbering_type):
     assert 0 <= w < 0x800
     word = wordlist[w]
-    hex = ('%03x' % w).upper()
+    if numbering_type == 'hex':
+        numbering = ('%03x' % w).upper()
+    else:
+        numbering = str(w+1)    
 
-    #rv = Paragraph(f'{word}\n<br/><font face="courier">{hex}</font>', cellStyle)
     rv = []
-    rv.append(Paragraph(hex, hex_style))
+    rv.append(Paragraph(numbering, numbering_style))
     rv.append(Paragraph(word, word_style))
 
     return rv
@@ -33,7 +37,7 @@ def left_label(x):
 def top_label(x):
     return Paragraph(x, labelStyleCenter)
 
-def doit(fname='wordlist.pdf'):
+def doit(fname, numbering_type):
     doc = SimpleDocTemplate(fname, pagesize=landscape(letter))
 
     doc.leftMargin = doc.rightMargin =  \
@@ -46,7 +50,7 @@ def doit(fname='wordlist.pdf'):
     #data = [[''] + [ top_label('+%d' % i) for i in range(rowlen)]]
         #[left_label('0x%03x'%j)] + 
     data = [ 
-            [cell(j+i) for i in range(0, rowlen)]
+            [cell(j+i, numbering_type) for i in range(0, rowlen)]
                 for j in range(0, 0x800, rowlen) ]
 
     t = Table(data, repeatRows=0)
@@ -68,4 +72,14 @@ def doit(fname='wordlist.pdf'):
     # write the document to disk
     doc.build(elements)
 
-doit()
+def main():
+    if len(sys.argv) == 1:
+        doit(fname='wordlist.pdf', numbering_type='hex')
+    elif sys.argv[1] == "--decimal" or sys.argv[1] == "-d":
+        doit(fname='wordlist-decimal.pdf', numbering_type='decimal')
+    else:
+        raise SystemExit(f"Something went wrong! Run python3 make-wordlist.py or"+ 
+            " python3 make-wordlist.py --decimal")
+
+if __name__ == '__main__':
+    main()
