@@ -36,7 +36,7 @@ def left_label(x):
 def top_label(x):
     return Paragraph(x, labelStyleCenter)
 
-def doit(fname='worksheet.pdf'):
+def doit(fname='worksheet.pdf', word_length=24):
     doc = SimpleDocTemplate(fname, pagesize=landscape(letter))
 
     doc.leftMargin = doc.rightMargin =  \
@@ -44,10 +44,10 @@ def doit(fname='worksheet.pdf'):
 
     # container for the 'Flowable' objects
     data = []
-    blanks = ['' for i in range(24*3)]
+    blanks = ['' for _ in range(word_length*3)]
     for part in 'ABCD':
         row = [part, 'Word #']
-        for i in range(24):
+        for i in range(word_length):
             row.append(str(i+1))
             row.append('')
             row.append('')
@@ -63,7 +63,12 @@ def doit(fname='worksheet.pdf'):
                 xor = '(A⊕B)⊕C'
             else:
                 xor = '...⊕' + part
-            data.append([xor, ''] + blanks[:-2] + ['X', 'X'])
+            if word_length == 24:
+                data.append([xor, ''] + blanks[:-2] + ['X', 'X'])
+            elif word_length == 12:
+                data.append([xor, ''] + blanks[:-1] + ['X'])
+            else:
+                data.append([xor, ''] + blanks)
 
     conf = [
         #('BACKGROUND',(1,1),(-2,-2),colors.green),
@@ -94,14 +99,14 @@ def doit(fname='worksheet.pdf'):
                 ('LINEABOVE', (0,y+3), (-1, y+3), 1.0, colors.grey),
             ])
 
-        for x in range(24):
+        for x in range(word_length):
             pos = 2 + (x*3)
             conf.extend([
                 ('SPAN', (pos,y), (pos+2, y)),
                 ('SPAN', (pos,y+1), (pos+2, y+1)),
             ])
 
-    for x in range(3, 24*3, 6):
+    for x in range(3, word_length*3, 6):
         conf.extend([
             ('BACKGROUND', (2+x,0), (2+x+2, -1), colors.lightgrey),
         ])
@@ -110,7 +115,7 @@ def doit(fname='worksheet.pdf'):
 
     W1 = 10
     W2 = W1 + 2
-    t = Table(data, repeatRows=0, colWidths=[W2, None]+[W1 for i in range(24*3)])
+    t = Table(data, repeatRows=0, colWidths=[W2, None]+[W1 for _ in range(word_length*3)])
     t.setStyle(TableStyle(conf))
 
     seed_samples = [[cell(w) for w in 
@@ -163,4 +168,5 @@ def doit(fname='worksheet.pdf'):
 
     doc.build(elements)
 
-doit()
+doit("worksheet12.pdf", 12)
+doit("worksheet.pdf", 24)
