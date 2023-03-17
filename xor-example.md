@@ -37,7 +37,7 @@
 
 ---
 
-# XOR Seed Example Using 3 Parts
+# 24 Words XOR Seed Example Using 3 Parts
 
 ## Seed A  (1 of 3)
 
@@ -85,10 +85,58 @@
       13=nurse [4BC], 14=find [2B5], 15=fish [2BD], 16=scene [604], 17=bench [0A8], 18=asthma [070],
       19=bike [0B1], 20=wage [7B1], 21=world [7ED], 22=quit [57E], 23=primary [555]
 
-      final word between: gas [300] - lend [3FF]
+      final word between: gas [300] - length [400]
       correct final word: indoor [398]
+
+
+
+# 12 Words XOR Seed Example Using 3 Parts
+
+## Seed A  (1 of 3)
+
+      1=romance [5DC], 2=wink [7DE], 3=lottery [420], 4=autumn [07D], 5=shop [635], 6=bring [0E1],
+      7=dawn [1BF], 8=tongue [723], 9=range [58E], 10=crater [194], 11=truth [74E], 12=ability [001]
+
+      A = 5DC 7DE 420 07D 635 0E1 1BF 723 58E 194 74E 001
+
+
+## Seed B  (2 of 3)
+
+      1=boat [0C6], 2=unfair [768], 3=shell [62B], 4=violin [7A2], 5=tree [73F], 6=robust [5DA], 7=open [4D9],
+      8=ride [5CB], 9=visual [7A7], 10=forest [2D9], 11=vintage [7A1], 12=approve [056]
+
+      B = 0C6 768 62B 7A2 73F 5DA 4D9 5CB 7A7 2D9 7A1 056
+
+
+## Seed C  (3 of 3)
+
+      1=lion [411], 2=misery [46D], 3=divide [1FF], 4=hurry [37D], 5=latin [3EB], 6=fluid [2CD], 7=camp [106],
+      8=advance [01F], 9=illegal [388], 10=lab [3E0], 11=pyramid [578], 12=unhappy [76A]
+
+      C = 411 46D 1FF 37D 3EB 2CD 106 01F 388 3E0 578 76A
+
+
+## Calculation (XOR each hex digit)
+
+      A = 5DC 7DE 420 07D 635 0E1 1BF 723 58E 194 74E 001
+      B = 0C6 768 62B 7A2 73F 5DA 4D9 5CB 7A7 2D9 7A1 056
+      C = 411 46D 1FF 37D 3EB 2CD 106 01F 388 3E0 578 76A
+          |               |               |              
+    XOR = 10B 4DB 3F4 4A2 2E1 7F6 460 2F7 1A1 0AD 597 73x
+
+
+## Resulting Seed Phrase
+
+      1=cannon [10B], 2=opinion [4DB], 3=leader [3F4], 4=nephew [4A2], 5=found [2E1], 6=yard [7F6],
+      7=metal [460], 8=galaxy [2F7], 9=crouch [1A1], 10=between [0AD], 11=real [597]
+
+      final word between: toward [730] - trend [740]
+      correct final word: trade [735]
+
+
+
 - It's not possible to calculate the checksum of the final seed phrase on paper (needs SHA256).
-- But it must start with the indicated digit, and there will be only one
+- It must start with the indicated digit(s). If using 24 words XOR, there will be only one
   suitable choice offered by the Coldcard in that range (x00 to xFF),
   once you have entered the other 23 words.
 - The checksum of each of the XOR-parts protects the final result, assuming your XOR
