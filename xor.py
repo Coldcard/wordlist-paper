@@ -161,8 +161,10 @@ def worked_example(count=3, entropy_bytes=32):
         _range = (2 ** chk_len) - 1
         chk = (lw_int >> chk_len) << chk_len
 
+    inclusive_range = (chk+_range) - 1
+
     print(f'\n{indent}final word between: %s [%03X] - %s [%03X]' % (
-            wordlist[chk], chk, wordlist[chk+_range], chk+_range))
+            wordlist[chk], chk, wordlist[inclusive_range], inclusive_range))
 
     secret, final = calc_check(rw + [chk])
     print(f'{indent}correct final word: %s [%03X]' % (wordlist[final], final))
