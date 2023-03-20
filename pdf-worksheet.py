@@ -150,7 +150,7 @@ def doit(fname='worksheet.pdf', word_length=24):
 
     # page top-to-bottom
     elements = []
-    elements.append(Paragraph('Seed XOR Worksheet - %d words' % word_length,
+    elements.append(Paragraph(f'Seed XOR Worksheet — {word_length} Words',
         ParagraphStyle('tlab2', alignment=TA_LEFT, fontSize=16, spaceAfter=20, spaceBefore=20)))
     elements.append(t)
 
