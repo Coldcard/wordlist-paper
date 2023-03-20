@@ -85,7 +85,7 @@
       13=nurse [4BC], 14=find [2B5], 15=fish [2BD], 16=scene [604], 17=bench [0A8], 18=asthma [070],
       19=bike [0B1], 20=wage [7B1], 21=world [7ED], 22=quit [57E], 23=primary [555]
 
-      final word between: gas [300] - length [400]
+      final word between: gas [300] - lend [3FF]
       correct final word: indoor [398]
 
 
@@ -130,7 +130,7 @@
       1=cannon [10B], 2=opinion [4DB], 3=leader [3F4], 4=nephew [4A2], 5=found [2E1], 6=yard [7F6],
       7=metal [460], 8=galaxy [2F7], 9=crouch [1A1], 10=between [0AD], 11=real [597]
 
-      final word between: toward [730] - trend [740]
+      final word between: toward [730] - tree [73F]
       correct final word: trade [735]
 
 
