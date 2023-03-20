@@ -136,7 +136,7 @@
 
 
 - It's not possible to calculate the checksum of the final seed phrase on paper (needs SHA256).
-- It must start with the indicated digit(s). If using 24 words XOR, there will be only one
+- But it must start with the indicated digit(s). If using 24 words XOR, there will be only one
   suitable choice offered by the Coldcard in that range (x00 to xFF),
   once you have entered the other 23 words.
 - The checksum of each of the XOR-parts protects the final result, assuming your XOR
